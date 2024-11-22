@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="/styles/login_style.css">
+  <link rel="icon" href="/img/hcmut.png">
+</head>
+
+<body>
+  <div id="welcome">
+    <h1>Dịch vụ in ấn online</h1>  
+  </div>
+  <br>
+  <div class="wrapper">
+    <form action="">
+      <img src="/img/hcmut.png" class="logo" style="width: 40%;">
+      <div class="wrapper">
+        <h3>Đăng nhập bằng tài khoản của bạn trên:</h1>
+        <a href="/pages/sso.html" class ="loginbutton" style="text-decoration: none;" >
+            <img src="/img/hcmut.png" class="tinylogo"> Tài khoản HCMUT
+        </a>
+        <a href="/pages/sso.html" class ="loginbutton" style="text-decoration: none;" >
+             Admin
+        </a>
+      </div>
+    </form>
+    <p style="display: inline-block;">
+      <div class="dropdown">
+        <span><p color="blue">Vietnamese (vi)</p></span>
+        <div class="dropdown-content">
+          <p>Vietnamese (vi)</p>
+          <p>English (en)</p>
+        </div>
+      </div>
+      <div class="cookies" onclick="myFunction()">
+        Thông báo từ các Cookies
+        <span class="popuptext" id="myPopup">test</span>
+      </div>
+    </p>
+  </div>
+</body>
+<script>
+function myFunction() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
+</script>
+</html>

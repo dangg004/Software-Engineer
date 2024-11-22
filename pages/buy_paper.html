@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy paper</title>
+    <link rel="stylesheet"href="/styles/buy_paper_style.css">
+    <link rel="icon" href="/img/hcmut.png">
+</head>
+<body>
+    <div class="header">
+        <img class="icon" src="/img/hcmut.png">
+        <p style="width: 95%; background-color: rgba(3, 136, 180, 1);">DỊCH VỤ IN ẤN THÔNG MINH</p>
+        <img class="icon" id="account_icon" src="/img/output-onlinepngtools.png" style="float: right;">
+    </div>
+    <div style="display: flex; align-items: center;">
+        <a href="/pages/index.html" class="return">Trở về</a>
+        <p>Trang chủ / Nạp giấy</p>
+    </div>
+    <div class="wrapper">
+        <h1 style="text-align: center;">Bổ sung giấy cho tài khoản của bạn</h1>
+        <div style="margin-left: 10% ;width: 30%; margin-right: 10%; float: left;">
+            <lable for="paper1" style="color: gray; font-weight: bold;">Giấy in màu</lable>
+            <br>
+            <input type="text" class="buy" name="paper1" placeholder="Số giấy cần mua">
+            <br><br>
+            <lable for="paper2" style="color: gray; font-weight: bold;">Giấy in không màu</lable>
+            <br>
+            <input type="text" class="buy" name="paper2" placeholder="Số giấy cần mua">
+            <p>Phương thức thanh toán</p>
+            <label>
+                <input type="radio" class="radio" name="method[]">
+                Chuyển khoản qua BKPay
+            </label>
+            <br>
+            <label>
+                <input type="radio" class="radio" name="method[]">
+                Chuyển khoản qua ngân hàng
+            </label> 
+            <br>
+            <br>
+            <br>
+            <a style="margin-left: 50%;" href="#" class="confirm">Xác nhận thanh toán</a>
+            
+        </div>
+        
+        <div style="margin-right: 10%; width: 20%; margin-left: 10%; float: right;" class="doublecheck">
+            <p>Số lượng giấy: x</p>
+            <p>Tổng tiền cần thanh toán: </p>
+        </div>
+    </div>
+
+</body>
+
+</html>

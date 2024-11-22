@@ -1,0 +1,53 @@
+* {
+    background-color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    background-color: rgba(3, 136, 180, 1);
+    width: 100%;
+    color: white;
+    margin: 0px 0px;
+}
+
+.icon{
+    display: inline-block;
+    height: 30px;
+    background-color: rgba(3, 136, 180, 1);
+}
+
+.return {
+    margin: 20px;
+    padding: 5px 30px;
+    color: gray;
+    text-decoration: none;
+    border: solid darkgray;
+    border-radius: 25px;
+}
+
+input.buy {
+    border: solid 1px black;
+    border-radius: 4px;
+    width: 507px;
+    height: 56px;
+
+}
+
+.confirm {
+    background-color: rgba(20, 136, 219, 1);
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    margin-left: 52%;
+}
+
+.doublecheck {
+    border: solid 1px black;
+    border-radius: 25px;
+    padding: 30px;
+    width: 200px;
+}

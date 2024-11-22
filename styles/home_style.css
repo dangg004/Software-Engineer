@@ -1,0 +1,61 @@
+* {
+    background-color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+.icon{
+    display: inline-block;
+    height: 30px;
+    background-color: rgba(3, 136, 180, 1);
+}
+
+.logout {
+    float: right; 
+    text-decoration: underline;
+    color: white;
+    width: auto;
+    margin-right: 20px;    
+    background-color: rgba(3, 136, 180, 1);
+
+}
+
+#account_icon {
+    float: right;
+}
+
+.header {
+    display: inline-block;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    background-color: rgba(3, 136, 180, 1);
+    width: 100%;
+    color: white;
+    margin: 0px 0px;
+}
+
+.balance_box {
+    border: solid black;
+    width: 95%;
+}
+
+form {
+    column-count: 2;
+    column-span: all;
+    margin: 10px;
+  }
+
+.functionbutton {
+    display: block;
+    border: solid rgba(20, 136, 219, 1);
+    border-radius: 10px;
+    background-color: rgba(20, 136, 219, 1);
+    color: white;
+    font-size: 36px;
+    text-align: center;
+    padding: 20px 20px;
+}
