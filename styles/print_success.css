@@ -1,0 +1,79 @@
+body, h1, h2, p {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    text-align: center;
+}
+
+.header {
+    background-color: #0094cf;
+    color: white;
+    padding: 10px 0;
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    gap: 10px;
+}
+
+.logo {
+    height: 40px;
+}
+
+.breadcrumb {
+    margin: 10px 0;
+    font-size: 14px;
+    color: gray;
+    text-align: left; 
+    width: 100%; 
+    padding-left: 40px;
+}
+
+.content {
+    margin: 50px auto;
+    max-width: 600px;
+    padding: 20px;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.message-box {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.message-box p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.home-button {
+    margin-top: 20px; 
+}
+
+.home-button .next-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none; 
+    display: inline-block; 
+}
+
+.home-button .next-btn:hover {
+    background-color: #0056b3; 
+}

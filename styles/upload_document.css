@@ -1,0 +1,111 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.header {
+    background-color: #008dcf;
+    color: white;
+    padding: 10px 20px;
+    text-align: left;
+    display: flex;
+}
+
+.header .icon {
+    width: 40px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.header h1 {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.back-button {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.back-btn {
+    background: #e0e0e0;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.back-btn:hover {
+    background: #d0d0d0;
+}
+
+.back-btn .arrow {
+    margin-right: 5px;
+    font-size: 1.2em;
+}
+
+.breadcrumb {
+    margin-left: 10px;
+    color: #666;
+}
+
+.file-upload {
+    margin: 20px auto;
+}
+
+.file-drop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 30px;
+    background-color: #f7f7f7;
+    border: 2px solid #d0d0d0;
+    border-radius: 10px;
+}
+
+.file-drop:hover {
+    background-color: #e7e7e7;
+    border-color: #a0a0a0;
+}
+
+.folder-icon {
+    width: 60px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.next-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.next-btn {
+    background: #008dcf;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.next-btn:hover {
+    background: #006bb3;
+}
