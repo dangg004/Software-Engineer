@@ -71,22 +71,22 @@
                 <!--Check xem printer nào đã được chọn-->
 
                 <script type="text/javascript">
-                    <!--Load trước 1 lần để chặn trường hợp qua trang mà không thay đổi dữ liệu của dropdown -->
+                    //Load trước 1 lần để chặn trường hợp qua trang mà không thay đổi dữ liệu của dropdown
                     update(); 
                    
-                    <!-- Lưu dữ liệu của dropdown vào localStorage để pass sang các trang khác -->
+                    //Lưu dữ liệu của dropdown vào localStorage để pass sang các trang khác
                 function update()
                 {
                     var text= document.getElementById("selector").value;
 
-                    <!-- Tách value ra lại thành printerName và Location -->
+                    //Tách value ra lại thành printerName và Location
                     var printer = text.split(",")[0];
                     var location = text.split(",")[1];
-                    <!-- Lưu vào localStorage -->
+                    //Lưu vào localStorage
                     localStorage.setItem("printer", printer);
                     localStorage.setItem("location", location);
 
-                    <!-- Debug -->
+                   //Debug
                     console.log(localStorage.getItem("printer") + " at " + localStorage.getItem("location"));
                 }
                     
