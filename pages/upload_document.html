@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload File</title>
+    <link rel="stylesheet" href="../styles/upload_document.css">
+</head>
+<body>
+    <div class="header">
+        <img src="../img/hcmut.png" class="icon">
+        <h1>DỊCH VỤ IN ẤN THÔNG MINH</h1>
+    </div>
+    <div class="container">
+        <div class="back-button">
+            <a href="../pages/index.html" class="back-btn">
+                <span class="arrow">⬅️</span> Trở về
+            </a>
+            <span class="breadcrumb">Trang chủ / Gửi tệp in</span>
+        </div>
+        <div class="upload-box">
+            <h2>Gửi tệp tin</h2>
+            <div class="file-upload">
+                <input type="file" id="fileInput" hidden>
+                <label for="fileInput" class="file-drop">
+                    <img src="../img/folder-icon.png" alt="Folder" class="folder-icon">
+                    <p>Nhấp vào đây hoặc kéo thả vào ô để đăng tệp tin</p>
+                </label>
+            </div>
+            <p id="fileInfo" style="margin-top: 10px;"></p>
+        </div>
+        <div class="next-button">
+            <button class="next-btn" id="nextButton" disabled onclick="uploadFile()">
+                Tiếp tục đến in
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let uploadedFileContent = '';
+
+        const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const nextButton = document.getElementById('nextButton');
+
+        fileInput.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                
+                const maxFileSize = 5 * 1024 * 1024; 
+                if (file.size > maxFileSize) {
+                    fileInfo.textContent = 'Tệp quá lớn! Vui lòng chọn tệp nhỏ hơn 5MB.';
+                    nextButton.disabled = true;
+                    return;
+                }
+
+                fileInfo.textContent = `Tệp đã chọn: ${file.name}`;
+                nextButton.disabled = true; 
+
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    uploadedFileContent = event.target.result;
+                    localStorage.setItem('uploadedFileName', file.name);
+                    localStorage.setItem('uploadedFileContent', uploadedFileContent);
+                    nextButton.disabled = false; 
+                };
+                reader.onerror = function () {
+                    fileInfo.textContent = 'Đã xảy ra lỗi khi đọc tệp. Vui lòng thử lại.';
+                    nextButton.disabled = true;
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        function uploadFile() {
+            if (!uploadedFileContent) {
+                alert('Vui lòng chờ hoàn tất tải lên trước khi tiếp tục!');
+                return;
+            }
+            window.location.href = '../pages/upload_preview.html';
+        }
+    </script>
+</body>
+</html>

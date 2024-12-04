@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Preview</title>
+    <link rel="stylesheet" href="../styles/upload_preview.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="user-icon">
+                <img src="../img/hcmut.png" alt="User Icon">
+            </div>
+            <h1>DỊCH VỤ IN ẤN THÔNG MINH</h1>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="back-button">
+            <a href="../pages/upload_document.html" class="back-btn">
+                <span class="arrow">⬅️</span> Trở về
+            </a>
+            <span class="breadcrumb">Trang chủ / Gửi tệp in / Xem trước</span>
+        </div>
+
+        <div class="preview-section">
+            <div class="preview-box">
+                <p>Xem trước bản in</p>
+                <div class="document-preview" id="documentPreview">
+                    <canvas id="pdfCanvas"></canvas>
+                </div>
+                <div class="pagination">
+                    <button id="prevPage">Trang trước</button>
+                    <button id="nextPage">Trang sau</button>
+                    <p>Trang <span id="pageNum">1</span> / <span id="pageCount">0</span></p>
+                </div>
+            </div>
+
+            <div class="print-settings">
+                <h2>Định dạng in:</h2>
+                <div class="setting-option">
+                    <label>In ở máy:</label>
+                    <div class="dropdown">
+                        <select>
+                            <option value="PRINTER_ABC123">PRINTER_ABC123 - A4, không màu, địa điểm: A4-202</option>
+                            <option value="PRINTER_XYZ456">PRINTER_XYZ456 - A3, màu, địa điểm: B3-101</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="setting-option">
+                    <label>Số trang:</label>
+                    <div class="dropdown">
+                        <select>
+                            <option value="all">In hết tất cả trang</option>
+                            <option value="specific">In các trang cụ thể</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="print-button">
+                    <a href="../pages/print_success.html" class="print-btn">
+                        In
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thêm thư viện PDF.js
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+
+    <script>
+        const pdfCanvas = document.getElementById('pdfCanvas');
+        const ctx = pdfCanvas.getContext('2d');
+        const prevPageBtn = document.getElementById('prevPage');
+        const nextPageBtn = document.getElementById('nextPage');
+        const pageNumElem = document.getElementById('pageNum');
+        const pageCountElem = document.getElementById('pageCount');
+
+        let pdfDoc = null;
+        let pageNum = 1;
+        let pageRendering = false;
+        let pageNumPending = null;
+
+        const fileContent = localStorage.getItem('uploadedFileContent');
+        const fileName = localStorage.getItem('uploadedFileName');
+
+        if (fileName && fileContent) {
+            const fileExtension = fileName.split('.').pop().toLowerCase();
+
+            if (fileExtension === 'pdf') {
+                // Tải PDF
+                pdfjsLib.getDocument(fileContent).promise.then(pdf => {
+                    pdfDoc = pdf;
+                    pageCountElem.textContent = pdf.numPages;
+                    renderPage(pageNum);
+                });
+            } else {
+                document.getElementById('documentPreview').textContent = 'Tệp không phải là PDF!';
+            }
+        } else {
+            document.getElementById('documentPreview').textContent = 'Không có tệp nào được tải lên!';
+        }
+
+        function renderPage(num) {
+            pageRendering = true;
+            pdfDoc.getPage(num).then(page => {
+                const viewport = page.getViewport({ scale: 1.5 });
+                pdfCanvas.height = viewport.height;
+                pdfCanvas.width = viewport.width;
+
+                const renderCtx = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+                const renderTask = page.render(renderCtx);
+
+                renderTask.promise.then(() => {
+                    pageRendering = false;
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            });
+
+            pageNumElem.textContent = num;
+        }
+
+        function queueRenderPage(num) {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        }
+
+        prevPageBtn.addEventListener('click', () => {
+            if (pageNum <= 1) return;
+            pageNum--;
+            queueRenderPage(pageNum);
+        });
+
+        nextPageBtn.addEventListener('click', () => {
+            if (pageNum >= pdfDoc.numPages) return;
+            pageNum++;
+            queueRenderPage(pageNum);
+        });
+    </script> -->
+</body>
+</html>
