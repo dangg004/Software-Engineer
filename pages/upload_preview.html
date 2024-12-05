@@ -89,7 +89,28 @@
                    //Debug
                     console.log(localStorage.getItem("printer") + " at " + localStorage.getItem("location"));
                 }
-                    
+                //Gửi data qua cho addhistory để lưu lịch sử
+                function senddata(){
+                    //Tạo một formdata để trữ dữ liệu
+                    var data = new FormData();
+                    data.append("printer", localStorage.getItem("printer"));
+                    data.append("location", localStorage.getItem("location"));
+                    const today = new Date();
+                    var shortenDay = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                    data.append("date", shortenDay);
+                    //Gửi đi
+                    fetch("addhistory.php", {
+                        method: "POST",
+                        body: data
+                    })
+                    //DEBUG
+                    .then(res => res.text())
+                    .then(txt  => console.log(txt))
+                    .catch(err => console.error(err));
+                }
+                //Set hàm senddata cho nút "In"
+                document.getElementById("next-button").addEventListener("click", senddata());
+                
                 </script>
             </div>
         </div>
