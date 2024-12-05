@@ -2,10 +2,13 @@ const express = require("express");
 const multer = require("multer");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const path = require("path");
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+
+const uploadFolder = path.join(__dirname, "../uploads");
 
 // Mock database
 let uploadedFiles = [];
@@ -13,10 +16,10 @@ let uploadedFiles = [];
 // Configure multer for file storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "uploads/"); // Ensure the 'uploads/' folder exists
+    cb(null, uploadFolder); // Ensure the 'uploads/' folder exists
   },
   filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
+    cb(null, `${file.originalname}`);
   },
 });
 const upload = multer({ storage });
