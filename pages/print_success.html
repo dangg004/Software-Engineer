@@ -17,9 +17,9 @@
     </div>
     <div class="content">
         <h2>Chúc mừng! bạn đã in thành công</h2>
-        <div class="message-box">
-            <p>Hãy nhanh chóng đến máy in <strong>PRINTER_ABC123</strong></p>
-            <p>Tại <strong>A4-202</strong> để nhận tài liệu của bạn</p>
+        <div class="message-box" id="notice">
+            <p id = 1></p>
+            <p id = 2 ></p>
         </div>
         <div class="home-button">
             <a href="../pages/index.html" class="next-btn">
@@ -27,5 +27,14 @@
             </a>
         </div>
     </div>
+    <script type="text/javascript">
+        var target1 = document.getElementById("1");
+        target1.innerHTML = "Hãy nhanh chóng đến máy in " + localStorage.getItem("printer").bold();
+        var target2 = document.getElementById("2");
+        target2.innerHTML= "Tại " + localStorage.getItem("location").bold() + " để nhận tài liệu của bạn";
+    </script>
+    <!-- <script type="text/javascript">
+        const mysql = require('mysql2')
+    </script> -->
 </body>
 </html>

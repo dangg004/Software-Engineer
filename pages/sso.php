@@ -15,9 +15,10 @@ $result = mysqli_query($con, $sql);
 
 if(mysqli_num_rows($result) >= 1){
     $_SESSION["myuser"] = $finaluser;
-    header("Location: /pages/index.html");
+    $link = "Location: /pages/index.html?username=" . $finaluser . "&" . "password=" . $finalpass;
+    header($link);
 }else{
     $_SESSION["error"] = "You are not valid user";
-    header("Location: /pages/error.html");
+    header("Location: /pages/sso.html");
 }
 ?>
