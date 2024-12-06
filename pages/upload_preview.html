@@ -65,195 +65,291 @@
                 <option value="all">In hết tất cả trang</option>
                 <option value="specific">In các trang cụ thể</option>
               </select>
+              <div class="print-settings">
+                <h2>Định dạng in:</h2>
+                <div class="setting-option">
+                  <label>In ở máy:</label>
+                  <div class="dropdown">
+                    <select id="selector" onchange="update()">
+                      <!-- Mỗi khi user đổi máy thì hàm update() sẽ chạy -->
+                      <!-- Value theo định dạng: "PrinterName,Location" -->
+
+                      <option value="PRINTER_ABC123,A4-202">
+                        PRINTER_ABC123 - A4, không màu, địa điểm: A4-202
+                      </option>
+                      <option value="PRINTER_XYZ456,B3-101">
+                        PRINTER_XYZ456 - A3, màu, địa điểm: B3-101
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="setting-option">
+                  <label>Số trang:</label>
+                  <div class="dropdown">
+                    <select>
+                      <option value="all">In hết tất cả trang</option>
+                      <option value="specific">In các trang cụ thể</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="print-button" id="next-button">
+                  <a href="../pages/print_success.html" class="print-btn">
+                    In
+                  </a>
+                </div>
+
+                <!--Check xem printer nào đã được chọn-->
+
+                <script type="text/javascript">
+                  //Load trước 1 lần để chặn trường hợp qua trang mà không thay đổi dữ liệu của dropdown
+                  update();
+
+                  //Lưu dữ liệu của dropdown vào localStorage để pass sang các trang khác
+                  function update() {
+                    var text = document.getElementById("selector").value;
+
+                    //Tách value ra lại thành printerName và Location
+                    var printer = text.split(",")[0];
+                    var location = text.split(",")[1];
+                    //Lưu vào localStorage
+                    localStorage.setItem("printer", printer);
+                    localStorage.setItem("location", location);
+
+                    //Debug
+                    console.log(
+                      localStorage.getItem("printer") +
+                        " at " +
+                        localStorage.getItem("location")
+                    );
+                  }
+                  //Gửi data qua cho addhistory để lưu lịch sử
+                  function senddata() {
+                    //Tạo một formdata để trữ dữ liệu
+                    var data = new FormData();
+                    data.append("printer", localStorage.getItem("printer"));
+                    data.append("location", localStorage.getItem("location"));
+                    const today = new Date();
+                    var shortenDay =
+                      today.getFullYear() +
+                      "-" +
+                      today.getMonth() +
+                      "-" +
+                      today.getDate() +
+                      " " +
+                      today.getHours() +
+                      ":" +
+                      today.getMinutes() +
+                      ":" +
+                      today.getSeconds();
+                    data.append("date", shortenDay);
+                    //Gửi đi
+                    fetch("addhistory.php", {
+                      method: "POST",
+                      body: data,
+                    })
+                      //DEBUG
+                      .then((res) => res.text())
+                      .then((txt) => console.log(txt))
+                      .catch((err) => console.error(err));
+                  }
+                  //Set hàm senddata cho nút "In"
+                  document
+                    .getElementById("next-button")
+                    .addEventListener("click", senddata());
+                </script>
+              </div>
             </div>
-          </div>
 
-          <div class="print-button" id="next-button">
-            <a href="../pages/print_success.html" class="print-btn"> In </a>
-          </div>
+            <div class="print-button" id="next-button">
+              <a href="../pages/print_success.html" class="print-btn"> In </a>
+            </div>
 
-          <!--Check xem printer nào đã được chọn-->
+            <!--Check xem printer nào đã được chọn-->
 
-          <script type="text/javascript">
-            //Load trước 1 lần để chặn trường hợp qua trang mà không thay đổi dữ liệu của dropdown
-            update();
+            <script type="text/javascript">
+              //Load trước 1 lần để chặn trường hợp qua trang mà không thay đổi dữ liệu của dropdown
+              update();
 
-            //Lưu dữ liệu của dropdown vào localStorage để pass sang các trang khác
-            function update() {
-              var text = document.getElementById("selector").value;
+              //Lưu dữ liệu của dropdown vào localStorage để pass sang các trang khác
+              function update() {
+                var text = document.getElementById("selector").value;
 
-              //Tách value ra lại thành printerName và Location
-              var printer = text.split(",")[0];
-              var location = text.split(",")[1];
-              //Lưu vào localStorage
-              localStorage.setItem("printer", printer);
-              localStorage.setItem("location", location);
+                //Tách value ra lại thành printerName và Location
+                var printer = text.split(",")[0];
+                var location = text.split(",")[1];
+                //Lưu vào localStorage
+                localStorage.setItem("printer", printer);
+                localStorage.setItem("location", location);
 
-              //Debug
-              console.log(
-                localStorage.getItem("printer") +
-                  " at " +
-                  localStorage.getItem("location")
-              );
-            }
-            //Gửi data qua cho addhistory để lưu lịch sử
-            function senddata() {
-              //Tạo một formdata để trữ dữ liệu
-              var data = new FormData();
-              data.append("printer", localStorage.getItem("printer"));
-              data.append("location", localStorage.getItem("location"));
-              const today = new Date();
-              var shortenDay =
-                today.getFullYear() +
-                "-" +
-                today.getMonth() +
-                "-" +
-                today.getDate() +
-                " " +
-                today.getHours() +
-                ":" +
-                today.getMinutes() +
-                ":" +
-                today.getSeconds();
-              data.append("date", shortenDay);
-              //Gửi đi
-              fetch("addhistory.php", {
-                method: "POST",
-                body: data,
-              })
-                //DEBUG
-                .then((res) => res.text())
-                .then((txt) => console.log(txt))
-                .catch((err) => console.error(err));
-            }
-            //Set hàm senddata cho nút "In"
-            document
-              .getElementById("next-button")
-              .addEventListener("click", senddata());
-          </script>
-
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
-
-          <script>
-            // Load file from localStorage and display its preview with navigation
-            function previewFile() {
-              const fileContent = localStorage.getItem("uploadedFileContent");
-              const fileName = localStorage.getItem("uploadedFileName");
-
-              if (!fileContent || !fileName) {
-                document.getElementById("documentPreview").innerText =
-                  "No file uploaded or file data missing.";
-                return;
+                //Debug
+                console.log(
+                  localStorage.getItem("printer") +
+                    " at " +
+                    localStorage.getItem("location")
+                );
               }
-
-              console.log("Previewing file:", fileName);
-
-              // Convert Base64 file content back to an ArrayBuffer
-              const binaryString = atob(fileContent.split(",")[1]);
-              const len = binaryString.length;
-              const arrayBuffer = new Uint8Array(len);
-
-              for (let i = 0; i < len; i++) {
-                arrayBuffer[i] = binaryString.charCodeAt(i);
-              }
-
-              // Use Mammoth.js to render the .docx file
-              mammoth
-                .convertToHtml({ arrayBuffer: arrayBuffer.buffer })
-                .then(function (result) {
-                  const container = document.getElementById("documentPreview");
-                  container.innerHTML = ""; // Clear previous content
-
-                  const content = result.value;
-
-                  // Simulate pages by splitting content
-                  const pageHeight = 800; // Desired page height
-                  const tempDiv = document.createElement("div");
-                  tempDiv.innerHTML = content;
-
-                  const pages = []; // Store individual pages
-                  let currentPageContent = "";
-                  let currentHeight = 0;
-
-                  while (tempDiv.firstChild) {
-                    const child = tempDiv.firstChild;
-                    tempDiv.removeChild(child);
-
-                    // Wrap child in a temporary div to calculate its height
-                    const tempWrapper = document.createElement("div");
-                    tempWrapper.appendChild(child);
-                    document.body.appendChild(tempWrapper);
-
-                    const childHeight = tempWrapper.scrollHeight;
-                    document.body.removeChild(tempWrapper);
-
-                    // Add content to current page or start a new one if height exceeds limit
-                    if (currentHeight + childHeight > pageHeight) {
-                      pages.push(currentPageContent);
-                      currentPageContent = "";
-                      currentHeight = 0;
-                    }
-                    currentPageContent += child.outerHTML;
-                    currentHeight += childHeight;
-                  }
-
-                  // Add the remaining content as the final page
-                  if (currentPageContent.trim()) {
-                    pages.push(currentPageContent);
-                  }
-
-                  // Set up navigation
-                  let currentPageIndex = 0;
-
-                  function renderPage(index) {
-                    container.innerHTML = pages[index]; // Render the selected page
-                    document.getElementById("pageNum").innerText = index + 1;
-                    document.getElementById("pageCount").innerText =
-                      pages.length;
-
-                    // Disable navigation buttons at boundaries
-                    document.getElementById("prevPage").disabled = index === 0;
-                    document.getElementById("nextPage").disabled =
-                      index === pages.length - 1;
-                  }
-
-                  // Initial render
-                  renderPage(currentPageIndex);
-
-                  // Event listeners for navigation buttons
-                  document
-                    .getElementById("prevPage")
-                    .addEventListener("click", () => {
-                      if (currentPageIndex > 0) {
-                        currentPageIndex--;
-                        renderPage(currentPageIndex);
-                      }
-                    });
-
-                  document
-                    .getElementById("nextPage")
-                    .addEventListener("click", () => {
-                      if (currentPageIndex < pages.length - 1) {
-                        currentPageIndex++;
-                        renderPage(currentPageIndex);
-                      }
-                    });
+              //Gửi data qua cho addhistory để lưu lịch sử
+              function senddata() {
+                //Tạo một formdata để trữ dữ liệu
+                var data = new FormData();
+                data.append("printer", localStorage.getItem("printer"));
+                data.append("location", localStorage.getItem("location"));
+                const today = new Date();
+                var shortenDay =
+                  today.getFullYear() +
+                  "-" +
+                  today.getMonth() +
+                  "-" +
+                  today.getDate() +
+                  " " +
+                  today.getHours() +
+                  ":" +
+                  today.getMinutes() +
+                  ":" +
+                  today.getSeconds();
+                data.append("date", shortenDay);
+                //Gửi đi
+                fetch("addhistory.php", {
+                  method: "POST",
+                  body: data,
                 })
-                .catch(function (err) {
-                  console.error("Error rendering .docx:", err);
-                  document.getElementById("documentPreview").innerText =
-                    "Error displaying document preview.";
-                });
-            }
+                  //DEBUG
+                  .then((res) => res.text())
+                  .then((txt) => console.log(txt))
+                  .catch((err) => console.error(err));
+              }
+              //Set hàm senddata cho nút "In"
+              document
+                .getElementById("next-button")
+                .addEventListener("click", senddata());
+            </script>
 
-            // Ensure the preview is loaded when the page is ready
-            document.addEventListener("DOMContentLoaded", previewFile);
-          </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+
+            <script>
+              // Load file from localStorage and display its preview with navigation
+              function previewFile() {
+                const fileContent = localStorage.getItem("uploadedFileContent");
+                const fileName = localStorage.getItem("uploadedFileName");
+
+                if (!fileContent || !fileName) {
+                  document.getElementById("documentPreview").innerText =
+                    "No file uploaded or file data missing.";
+                  return;
+                }
+
+                console.log("Previewing file:", fileName);
+
+                // Convert Base64 file content back to an ArrayBuffer
+                const binaryString = atob(fileContent.split(",")[1]);
+                const len = binaryString.length;
+                const arrayBuffer = new Uint8Array(len);
+
+                for (let i = 0; i < len; i++) {
+                  arrayBuffer[i] = binaryString.charCodeAt(i);
+                }
+
+                // Use Mammoth.js to render the .docx file
+                mammoth
+                  .convertToHtml({ arrayBuffer: arrayBuffer.buffer })
+                  .then(function (result) {
+                    const container =
+                      document.getElementById("documentPreview");
+                    container.innerHTML = ""; // Clear previous content
+
+                    const content = result.value;
+
+                    // Simulate pages by splitting content
+                    const pageHeight = 800; // Desired page height
+                    const tempDiv = document.createElement("div");
+                    tempDiv.innerHTML = content;
+
+                    const pages = []; // Store individual pages
+                    let currentPageContent = "";
+                    let currentHeight = 0;
+
+                    while (tempDiv.firstChild) {
+                      const child = tempDiv.firstChild;
+                      tempDiv.removeChild(child);
+
+                      // Wrap child in a temporary div to calculate its height
+                      const tempWrapper = document.createElement("div");
+                      tempWrapper.appendChild(child);
+                      document.body.appendChild(tempWrapper);
+
+                      const childHeight = tempWrapper.scrollHeight;
+                      document.body.removeChild(tempWrapper);
+
+                      // Add content to current page or start a new one if height exceeds limit
+                      if (currentHeight + childHeight > pageHeight) {
+                        pages.push(currentPageContent);
+                        currentPageContent = "";
+                        currentHeight = 0;
+                      }
+                      currentPageContent += child.outerHTML;
+                      currentHeight += childHeight;
+                    }
+
+                    // Add the remaining content as the final page
+                    if (currentPageContent.trim()) {
+                      pages.push(currentPageContent);
+                    }
+
+                    // Set up navigation
+                    let currentPageIndex = 0;
+
+                    function renderPage(index) {
+                      container.innerHTML = pages[index]; // Render the selected page
+                      document.getElementById("pageNum").innerText = index + 1;
+                      document.getElementById("pageCount").innerText =
+                        pages.length;
+
+                      // Disable navigation buttons at boundaries
+                      document.getElementById("prevPage").disabled =
+                        index === 0;
+                      document.getElementById("nextPage").disabled =
+                        index === pages.length - 1;
+                    }
+
+                    // Initial render
+                    renderPage(currentPageIndex);
+
+                    // Event listeners for navigation buttons
+                    document
+                      .getElementById("prevPage")
+                      .addEventListener("click", () => {
+                        if (currentPageIndex > 0) {
+                          currentPageIndex--;
+                          renderPage(currentPageIndex);
+                        }
+                      });
+
+                    document
+                      .getElementById("nextPage")
+                      .addEventListener("click", () => {
+                        if (currentPageIndex < pages.length - 1) {
+                          currentPageIndex++;
+                          renderPage(currentPageIndex);
+                        }
+                      });
+                  })
+                  .catch(function (err) {
+                    console.error("Error rendering .docx:", err);
+                    document.getElementById("documentPreview").innerText =
+                      "Error displaying document preview.";
+                  });
+              }
+
+              // Ensure the preview is loaded when the page is ready
+              document.addEventListener("DOMContentLoaded", previewFile);
+            </script>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Thêm thư viện PDF.js
+      <!-- Thêm thư viện PDF.js
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
     <script>
@@ -334,5 +430,6 @@
             queueRenderPage(pageNum);
         });
     </script> -->
+    </div>
   </body>
 </html>

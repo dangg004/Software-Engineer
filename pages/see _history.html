@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <div class="table-container">
+    <div class="table-container" id="table">
         <table>
             <thead>
                 <tr>
@@ -36,20 +36,48 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>phatchilugay.word</td>
-                    <td>7/10/2024</td>
-                    <td><a href="#" class="view-file">👁️</a></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>phatchiloucky.word</td>
-                    <td>9/12/2024</td>
-                    <td><a href="#" class="view-file">👁️</a></td>
-                </tr>
             </tbody>
         </table>
     </div>
+    <script type="text/javascript">
+        //Tạo một form data để gửi qua php
+        data = new FormData();
+        data.append("uTracker", "user1");
+
+        //Giao tiếp với php
+        fetch("gethistory.php", {
+            method: "POST",
+            body: data
+        })
+        //Chuyển hết dữ liệu phản hồi về thành 1 JSON
+        .then(res => res.json())
+        .then(json =>{
+            //debug
+            console.log(json);
+            //Tạo biến đếm để track số thứ tự
+            var c = 0;
+            //Chọn table
+            var tbodyRef = document.getElementById("table").getElementsByTagName('tbody')[0];
+            //Tìm số lượng hàng trong file json được trả về
+            for (j in json)
+            {
+                console.log(parseInt(j));
+                if (parseInt(j)>c) c = parseInt(j);
+            }
+            //Với mỗi hàng trong JSON, thêm một hàng vào table theo thứ tự từ dưới lên (Mới nhất trên cùng)
+            for (j in json)
+            {
+                Content = "<td>"+ (c + 1) +"</td><td>" + json[j]['uploadedUser'] + "</td><td>" + json[j]['printDate'] + "</td>";
+                Content += "<td><a href='#' class='view-file'>👁️</a></td>"
+                var newRow = tbodyRef.insertRow(0);
+                newRow.innerHTML = Content;
+                //Số thứ tự đếm ngược nên giảm c
+                c--;
+                //DEBUG
+                console.log(c);
+            }
+        })
+        .catch(err => console.error(err));
+    </script>
 </body>
 </html>
