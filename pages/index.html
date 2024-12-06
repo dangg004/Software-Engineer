@@ -8,6 +8,8 @@
     <link rel="icon" href="/img/hcmut.png">
 </head>
 <body>
+    
+
     <div class="header">
         <img class="icon" src="/img/hcmut.png">
         <p style="width: 90%; background-color: rgba(3, 136, 180, 1);">DỊCH VỤ IN ẤN THÔNG MINH</p>
@@ -29,7 +31,7 @@
             Gửi tệp in
         </a>
         <br>
-        <a href="/pages/buy_paper.html" class ="functionbutton">
+        <a id=".IndexBuyPaper" href="#" class ="functionbutton">
             Mua thêm giấy
         </a>
         <br>
@@ -37,7 +39,11 @@
             Xem lịch sử in
         </a>
     </div>
-        
     
+    <script>
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    window.onload = function(){ document.getElementById(".IndexBuyPaper").href="/pages/Buy_paper.html?username="+urlParams.get('username')+"&password="+urlParams.get('password');}
+    </script>
 </body>
 </html>
