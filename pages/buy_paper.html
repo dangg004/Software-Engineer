@@ -20,36 +20,75 @@
     <div class="wrapper">
         <h1 style="text-align: center;">Bổ sung giấy cho tài khoản của bạn</h1>
         <div style="margin-left: 10% ;width: 30%; margin-right: 10%; float: left;">
-            <lable for="paper1" style="color: gray; font-weight: bold;">Giấy in màu</lable>
-            <br>
-            <input type="text" class="buy" name="paper1" placeholder="Số giấy cần mua">
-            <br><br>
-            <lable for="paper2" style="color: gray; font-weight: bold;">Giấy in không màu</lable>
-            <br>
-            <input type="text" class="buy" name="paper2" placeholder="Số giấy cần mua">
-            <p>Phương thức thanh toán</p>
-            <label>
-                <input type="radio" class="radio" name="method[]">
-                Chuyển khoản qua BKPay
-            </label>
-            <br>
-            <label>
-                <input type="radio" class="radio" name="method[]">
-                Chuyển khoản qua ngân hàng
-            </label> 
-            <br>
-            <br>
-            <br>
-            <a style="margin-left: 50%;" href="#" class="confirm">Xác nhận thanh toán</a>
-            
+            <form action="buy_paper.php" method="POST">
+                <input id="username" name='username' value="" hidden >
+                <input id="password" name='password' value="" hidden >
+                <lable for="paper1" style="color: gray; font-weight: bold;">Giấy in màu</lable>
+                <br>
+                <input type="number" value="0" min="0" id=".paper1" class="buy" name="paper1" placeholder="Số giấy cần mua">
+                <br><br>
+                <lable for="paper2" style="color: gray; font-weight: bold;">Giấy in không màu</lable>
+                <br>
+                <input type="number" value="0" min="0" id=".paper2" class="buy" name="paper2" placeholder="Số giấy cần mua">
+                <p>Phương thức thanh toán</p>
+                <label>
+                    <input type="radio" class="radio" name="method[]">
+                    Chuyển khoản qua BKPay
+                </label>
+                <br>
+                <label>
+                    <input type="radio" class="radio" name="method[]">
+                    Chuyển khoản qua ngân hàng
+                </label> 
+                <br>
+                <br>
+                <br>
+                <button id="send" type="submit" style="margin-left: 50%;" href="#" class="confirm">Xác nhận thanh toán</button>
+            </form>
         </div>
         
         <div style="margin-right: 10%; width: 20%; margin-left: 10%; float: right;" class="doublecheck">
-            <p>Số lượng giấy: x</p>
-            <p>Tổng tiền cần thanh toán: </p>
+            <p id=".paperCount">Số lượng giấy: 0</p>
+            <p id=".money">Tổng tiền cần thanh toán: 0VND</p>
         </div>
     </div>
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
 
+        const paper1 = document.getElementById(".paper1");
+        const paper2 = document.getElementById(".paper2");
+        const paperCount = document.getElementById(".paperCount");
+        const money = document.getElementById(".money");
+        let paper1value = 0;
+        let paper2value = 0;
+        let totalPaper = 0;
+
+        window.onload = function(){
+            document.getElementById("username").value=urlParams.get('username');
+            document.getElementById("password").value=urlParams.get('password');
+        }
+
+        console.log("balls");
+        paper1.addEventListener('change', () => {
+        paper1value = paper1.value<0?0:paper1.value;
+        paper2value = paper2.value<0?0:paper2.value;
+        paper1.value= paper1value;
+        paper2.value= paper2value;
+        totalPaper =  parseInt(paper1value) + parseInt(paper2value);
+        paperCount.innerText = "Số lượng giấy: " + totalPaper;
+        money.innerText = "Tổng tiền cần thanh toán: " + ( paper1value * 3000 + paper2value * 1000) + "VND";
+        });
+        paper2.addEventListener('change', () => {
+        paper1value = paper1.value<0?0:paper1.value;
+        paper2value = paper2.value<0?0:paper2.value;
+        paper1.value= paper1value;
+        paper2.value= paper2value;
+        totalPaper =  parseInt(paper1value) + parseInt(paper2value);
+        paperCount.innerText = "Số lượng giấy: " + totalPaper;
+        money.innerText = "Tổng tiền cần thanh toán: " + ( paper1value * 3000 + paper2value * 1000) + "VND";
+        });
+    </script>
 </body>
 
 </html>
