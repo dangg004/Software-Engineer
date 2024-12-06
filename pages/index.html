@@ -22,8 +22,8 @@
             <h1>
                 Số lượng giấy còn trong tài khoản:
             </h1>
-            <h3>Giấy in màu: </h3>
-            <h3>Giấy in thường: </h3>
+            <h3 id=".colorPaper">Giấy in màu: </h3>
+            <h3 id=".normalPaper">Giấy in thường: </h3>
         </div>
     </div>    
     <div style="width: 50%; float: right;">
@@ -43,7 +43,11 @@
     <script>
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    window.onload = function(){ document.getElementById(".IndexBuyPaper").href="/pages/Buy_paper.html?username="+urlParams.get('username')+"&password="+urlParams.get('password');}
+    window.onload = function(){
+        document.getElementById(".IndexBuyPaper").href="/pages/Buy_paper.html?username="+urlParams.get('username')+"&password="+urlParams.get('password');
+        document.getElementById(".colorPaper").innerText="Giấy in màu: "+urlParams.get('cc');
+        document.getElementById(".normalPaper").innerText="Giấy in thường: "+urlParams.get('nn');
+    }
     </script>
 </body>
 </html>
