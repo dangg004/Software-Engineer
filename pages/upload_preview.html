@@ -102,6 +102,11 @@
               var data = new FormData();
               data.append("printer", localStorage.getItem("printer"));
               data.append("location", localStorage.getItem("location"));
+              data.append("fileContent", localStorage.getItem("uploadedFileContent"));
+              data.append("fileName", localStorage.getItem("uploadedFileName"));
+              /* data.append("user", localStorage.getItem("user"));
+              data.append("normalCount", localStorage.getItem("normalCount"));
+              data.append("colorCount", localStorage.getItem("colorCount"));*/
               const today = new Date();
               var shortenDay =
                 today.getFullYear() +
@@ -131,7 +136,6 @@
               .getElementById("next-button")
               .addEventListener("click", senddata());
           </script>
-
           <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
 
           <script>
@@ -251,7 +255,7 @@
           </script>
         </div>
       </div>
-    </div>
+    </div>  -->
 
     <!-- Thêm thư viện PDF.js
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
