@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success</title>
+    <link rel="stylesheet"href="/styles/buy_paper_style.css">
+    <link rel="icon" href="/img/hcmut.png">
+</head>
+<body>
+    <div class="header">
+        <img class="icon" src="/img/hcmut.png">
+        <p style="width: 95%; background-color: rgba(3, 136, 180, 1);">DỊCH VỤ IN ẤN THÔNG MINH</p>
+        <img class="icon" id="account_icon" src="/img/output-onlinepngtools.png" style="float: right;">
+    </div>
+    <div style="display: flex; align-items: center;">
+        <p>Trang chủ / Nạp giấy / Thanh toán thành công</p>
+    </div>
+    <div class="wrapper" style="max-width: fit-content; margin-left: auto; margin-right: auto;">
+        <div style="text-align: center;" class="doublecheck">
+            <p id=".papers">Bạn đã mua thêm 0 tờ giấy thường và 0 tờ giấy màu</p>
+            <p>Số lượng giấy hiện tại trong tài khoản</p>
+            <p id=".cpapers">Giấy in màu</p>
+            <p id=".npapers">Giấy in thường</p>
+        </div>
+        <br>
+        <br>
+        <div >
+            <a href="/pages/index.html" id=".back" style="
+            height:40px; 
+            width:200px; 
+            margin: 100px -25%; 
+            position:relative;
+            top:50%; 
+            left:50%;" class="confirm" >Trở về trang chủ</a>
+
+        </div>
+    </div>
+
+    <script>
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    theUsername=urlParams.get('username');
+    thePassword=urlParams.get('password');
+    
+    const papers = document.getElementById(".papers");
+    const cpapers = document.getElementById(".cpapers");
+    const npapers = document.getElementById(".npapers");
+    const back = document.getElementById(".back");
+    
+
+    papers.innerText="Bạn đã mua thêm  "+urlParams.get('n')+" tờ giấy thường và "+urlParams.get('c')+" tờ giấy màu" ;
+    cpapers.innerText="Giấy in màu: "+urlParams.get('cc');
+    npapers.innerText="Giấy in không màu: "+urlParams.get('nn');
+    window.onload= function(){back.href="/pages/index.html?username="+urlParams.get('username')+"&password="+urlParams.get('password')+"&nn="+urlParams.get('nn')+"&cc="+urlParams.get('cc');}
+
+    </script>
+</body>
+
+</html>
