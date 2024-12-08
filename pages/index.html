@@ -54,7 +54,7 @@
             method: "POST",
             body: data
         }).then(res => res.json())
-        /then(json => {
+        .then(json => {
             for (j in json)
             {
                 document.getElementById(".colorPaper").innerText="Giấy in màu: "+ json[j]['colorPaper'];
