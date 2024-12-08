@@ -45,9 +45,23 @@
     const urlParams = new URLSearchParams(queryString);
     window.onload = function(){
         document.getElementById(".IndexBuyPaper").href="/pages/Buy_paper.html?username="+urlParams.get('username')+"&password="+urlParams.get('password');
-        document.getElementById(".colorPaper").innerText="Giấy in màu: "+urlParams.get('cc');
-        document.getElementById(".normalPaper").innerText="Giấy in thường: "+urlParams.get('nn');
-    }
+        /*document.getElementById(".colorPaper").innerText="Giấy in màu: "+urlParams.get('cc');
+        document.getElementById(".normalPaper").innerText="Giấy in thường: "+urlParams.get('nn')*/;
+        data = new FormData();
+        data.append("username", urlParams.get('username'));
+        data.append("password", urlParams.get('password'));
+        fetch("getpaper.php", {
+            method: "POST",
+            body: data
+        }).then(res => res.json())
+        /then(json => {
+            for (j in json)
+            {
+                document.getElementById(".colorPaper").innerText="Giấy in màu: "+ json[j]['colorPaper'];
+                document.getElementById(".normalPaper").innerText="Giấy in thường: "+ json[j]['normalPaper'];;
+            }
+        })
+    }   
     </script>
 </body>
 </html>
