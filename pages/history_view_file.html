@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Print Preview</title>
+    <link rel="stylesheet" href="../styles/upload_preview.css" />
+  </head>
+  <body>
+    <div class="header">
+      <div class="header-content">
+        <div class="user-icon">
+          <img src="../img/hcmut.png" alt="User Icon" />
+        </div>
+        <h1>DỊCH VỤ IN ẤN THÔNG MINH</h1>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="back-button">
+        <a href="../pages/see _history.html" class="back-btn">
+          <span class="arrow">⬅️</span> Trở về
+        </a>
+        <span class="breadcrumb">Trang chủ / Gửi tệp in / Xem lại</span>
+      </div>
+
+      <div class="preview-section">
+        <div class="preview-box">
+          <p>Xem lại bản in</p>
+          <div class="document-preview" id="documentPreview">
+            <canvas id="pdfCanvas"></canvas>
+          </div>
+          <div class="pagination">
+            <button id="prevPage">Trang trước</button>
+            <button id="nextPage">Trang sau</button>
+            <p>
+              Trang <span id="pageNum">1</span> / <span id="pageCount">0</span>
+            </p>
+          </div>
+        </div>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+
+          <script>
+            // Load file from localStorage and display its preview with navigation
+            function previewFile() {
+              const fileContent = localStorage.getItem("HistoryFileContent");
+              const fileName = localStorage.getItem("HistoryFileName");
+              console.log(fileContent, fileName);
+
+              if (!fileContent || !fileName) {
+                document.getElementById("documentPreview").innerText =
+                  "No file uploaded or file data missing.";
+                return;
+              }
+
+              console.log("Previewing file:", fileName);
+
+              // Convert Base64 file content back to an ArrayBuffer
+              const binaryString = atob(fileContent.split(",")[1]);
+              const len = binaryString.length;
+              const arrayBuffer = new Uint8Array(len);
+
+              for (let i = 0; i < len; i++) {
+                arrayBuffer[i] = binaryString.charCodeAt(i);
+              }
+
+              // Use Mammoth.js to render the .docx file
+              mammoth
+                .convertToHtml({ arrayBuffer: arrayBuffer.buffer })
+                .then(function (result) {
+                  const container = document.getElementById("documentPreview");
+                  container.innerHTML = ""; // Clear previous content
+
+                  const content = result.value;
+
+                  // Simulate pages by splitting content
+                  const pageHeight = 800; // Desired page height
+                  const tempDiv = document.createElement("div");
+                  tempDiv.innerHTML = content;
+
+                  const pages = []; // Store individual pages
+                  let currentPageContent = "";
+                  let currentHeight = 0;
+
+                  while (tempDiv.firstChild) {
+                    const child = tempDiv.firstChild;
+                    tempDiv.removeChild(child);
+
+                    // Wrap child in a temporary div to calculate its height
+                    const tempWrapper = document.createElement("div");
+                    tempWrapper.appendChild(child);
+                    document.body.appendChild(tempWrapper);
+
+                    const childHeight = tempWrapper.scrollHeight;
+                    document.body.removeChild(tempWrapper);
+
+                    // Add content to current page or start a new one if height exceeds limit
+                    if (currentHeight + childHeight > pageHeight) {
+                      pages.push(currentPageContent);
+                      currentPageContent = "";
+                      currentHeight = 0;
+                    }
+                    currentPageContent += child.outerHTML;
+                    currentHeight += childHeight;
+                  }
+
+                  // Add the remaining content as the final page
+                  if (currentPageContent.trim()) {
+                    pages.push(currentPageContent);
+                  }
+
+                  // Set up navigation
+                  let currentPageIndex = 0;
+
+                  function renderPage(index) {
+                    container.innerHTML = pages[index]; // Render the selected page
+                    document.getElementById("pageNum").innerText = index + 1;
+                    document.getElementById("pageCount").innerText =
+                      pages.length;
+
+                    // Disable navigation buttons at boundaries
+                    document.getElementById("prevPage").disabled = index === 0;
+                    document.getElementById("nextPage").disabled =
+                      index === pages.length - 1;
+                  }
+
+                  // Initial render
+                  renderPage(currentPageIndex);
+
+                  // Event listeners for navigation buttons
+                  document
+                    .getElementById("prevPage")
+                    .addEventListener("click", () => {
+                      if (currentPageIndex > 0) {
+                        currentPageIndex--;
+                        renderPage(currentPageIndex);
+                      }
+                    });
+
+                  document
+                    .getElementById("nextPage")
+                    .addEventListener("click", () => {
+                      if (currentPageIndex < pages.length - 1) {
+                        currentPageIndex++;
+                        renderPage(currentPageIndex);
+                      }
+                    });
+                })
+                .catch(function (err) {
+                  console.error("Error rendering .docx:", err);
+                  document.getElementById("documentPreview").innerText =
+                    "Error displaying document preview.";
+                });
+            }
+
+            // Ensure the preview is loaded when the page is ready
+            document.addEventListener("DOMContentLoaded", previewFile);
+          </script>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
