@@ -65,8 +65,8 @@
         let totalPaper = 0;
 
         window.onload = function(){
-            document.getElementById("username").value=urlParams.get('username');
-            document.getElementById("password").value=urlParams.get('password');
+            document.getElementById("username").value=localStorage.getItem('username');
+            document.getElementById("password").value=localStorage.getItem('password');
         }
 
         console.log("balls");
