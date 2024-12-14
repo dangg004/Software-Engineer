@@ -9,7 +9,7 @@ $conn = new mysqli("localhost","root","","userinfo");
 //Tạo một array mới để chứa data lát gửi về
 $array = array();
 //Tìm các hàng trong SQL -> history có username trùng với cái cần tìm
-$sql = $conn->execute_query("SELECT * FROM user_balance where username = ? and 'password' = ?",[$name, $pass]);
+$sql = $conn->execute_query("SELECT * FROM user_balance where username = ?",[$name]);
 //Rồi add từng cái vào trong array
 while($fetch = mysqli_fetch_assoc($sql)){
     $array[] = $fetch;

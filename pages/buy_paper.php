@@ -40,8 +40,7 @@ fwrite($myfile, $normalPaper);
 fwrite($myfile, $colorPaper);
 fclose($myfile);*/
 
-$path = "Location: /pages/buy_paper_success.html?username=" . $_POST['username'] . "&" . "password=" . $_POST['password']
-. "&" . "n=" .$_POST['paper2']. "&" . "c=" .$_POST['paper1']
+$path = "Location: /pages/buy_paper_success.html?username=" . "n=" .$_POST['paper2']. "&" . "c=" .$_POST['paper1']
 . "&" . "nn=" .$normalPaper. "&" . "cc=" .$colorPaper;
                
 header($path);
