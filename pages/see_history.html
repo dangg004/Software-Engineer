@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DỊCH VỤ IN ẤN THÔNG MINH</title>
+    <link rel="stylesheet" href="../styles/see_history.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="user-icon">
+                <img src="../img/hcmut.png" alt="User Icon">
+            </div>
+            <h1>DỊCH VỤ IN ẤN THÔNG MINH</h1>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <div class="back-button">
+            <a href="/pages/index.html" class="back-btn">
+                <span class="arrow">⬅️</span> Trở về
+            </a>
+            <span class="breadcrumb">Trang chủ / Xem lịch sử in</span>
+        </div>
+    </div>
+
+    <div class="table-container" >
+        <table id="table">
+            <thead>
+                <tr>
+                    <th>SST</th>
+                    <th>Tên file</th>
+                    <th>Số trang thường</th>
+                    <th>Số trang màu</th>
+                    <th>Ngày in</th>
+                    <th>Xem file</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <script type="text/javascript">
+        var filearray = new Map();
+        //Tạo một form data để gửi qua php
+        data = new FormData();
+        data.append("uTracker", "user1");
+
+        //Giao tiếp với php
+        fetch("gethistory.php", {
+            method: "POST",
+            body: data
+        })
+        //Chuyển hết dữ liệu phản hồi về thành 1 JSON
+        .then(res => res.json())
+        .then(json =>{
+            //debug
+            //Tạo biến đếm để track số thứ tự
+            var c = 0;
+            var i = 0;
+            //Chọn table
+            var tbodyRef = document.getElementById("table").getElementsByTagName('tbody')[0];
+            //Tìm số lượng hàng trong file json được trả về
+            for (j in json)
+            {
+                if (parseInt(j)>c) c = parseInt(j);
+            }
+            //Với mỗi hàng trong JSON, thêm một hàng vào table theo thứ tự từ dưới lên (Mới nhất trên cùng)
+            for (j in json)
+            {
+                Content = "<tr><td id=" + j +">"+ (c + 1) +"</td><td>" + json[j]['uploadedUser'] + "</td><td>" + json[j]['normalCnt'] + "</td><td>"+ json[j]['colorCnt'] + "</td><td>"+ json[j]['printDate'] + "</td>";
+                Content += "<td><a href='../pages/history_view_file.html' class='view-file'>👁️</a></td></tr>"
+                var newRow = tbodyRef.insertRow(0);
+                newRow.innerHTML = Content;
+                //Số thứ tự đếm ngược nên giảm c
+                c--;
+                var temp = new Map;
+                temp.set("name",json[j]["printedFile"]);
+                temp.set("content", json[j]["printedFileContent"]);
+                filearray.set(i, temp);
+                i++;
+                //DEBUG
+            }
+        })
+        .catch(err => console.error(err));
+        table = document.getElementById("table");
+        
+        setTimeout(function () {
+            var tbodyRowCount = table.tBodies[0].rows.length - 1;
+            for (var i = 0; i <= tbodyRowCount; i++)
+            {
+                document.getElementById(i).addEventListener("click",history_transfer(i));
+                console.log(filearray.get(i).get("name"))
+            }
+        }, 3000);
+
+        function history_transfer(i)
+        {
+            localStorage.setItem("HistoryFileName", filearray.get(i).get("name"));
+            localStorage.setItem("HistoryFileContent",filearray.get(i).get("content"));
+        }
+    </script>
+</body>
+</html>

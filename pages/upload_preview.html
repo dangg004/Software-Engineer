@@ -67,10 +67,15 @@
               </select>
             </div>
           </div>
-
-          <div class="print-button" id="next-button">
-            <a href="../pages/print_success.html" class="print-btn"> In </a>
-          </div>
+          <form action="subtractPaper.php" method="post">
+            <div class="print-button" id="next-button">
+              <input type="number" id = ".paperCount" name="paperCount" value = "1" hidden >
+              <input type="text" id = ".username" name="username" value = "" hidden >
+              <input type="text" id = ".password" name="password" value = "" hidden >
+              <button type="submit" class="print-btn" name="paperCount" >In</button>
+            </div>
+          </form>
+          
 
           <!--Check xem printer nào đã được chọn-->
 
@@ -141,6 +146,9 @@
           <script>
             // Load file from localStorage and display its preview with navigation
             function previewFile() {
+              
+            document.getElementById(".username").value=localStorage.getItem('username');
+            document.getElementById(".password").value=localStorage.getItem('password');
               const fileContent = localStorage.getItem("uploadedFileContent");
               const fileName = localStorage.getItem("uploadedFileName");
 
@@ -214,6 +222,7 @@
                     document.getElementById("pageNum").innerText = index + 1;
                     document.getElementById("pageCount").innerText =
                       pages.length;
+
 
                     // Disable navigation buttons at boundaries
                     document.getElementById("prevPage").disabled = index === 0;

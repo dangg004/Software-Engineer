@@ -43,32 +43,33 @@
     <script type="text/javascript">
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    window.onload = function(){
-        document.getElementById(".IndexBuyPaper").href="/pages/Buy_paper.html?username="+urlParams.get('username')+"&password="+urlParams.get('password');
-        if (urlParams.get('username')!=null)
-        {
-            localStorage.setItem('username', urlParams.get('username'));
-            localStorage.setItem('password', urlParams.get('password'));
-        }
-        /*document.getElementById(".colorPaper").innerText="Giấy in màu: "+urlParams.get('cc');
-        document.getElementById(".normalPaper").innerText="Giấy in thường: "+urlParams.get('nn')*/;
-        data = new FormData();
-        data.append("username", localStorage.getItem('username'));
-        data.append("password", localStorage.getItem('password'));
+    document.getElementById(".IndexBuyPaper").href="/pages/Buy_paper.html?username="+urlParams.get('username')+"&password="+urlParams.get('password');
+    if (urlParams.get("username")!=null)
+    {
+        localStorage.setItem('username', urlParams.get('username'));
+        localStorage.setItem('password', urlParams.get('password'));
+    }
+    /*document.getElementById(".colorPaper").innerText="Giấy in màu: "+urlParams.get('cc');
+    document.getElementById(".normalPaper").innerText="Giấy in thường: "+urlParams.get('nn')*/;
+    data = new FormData();
+    data.append("username", localStorage.getItem('username'));
+    data.append("password", localStorage.getItem('password'));
+    setTimeout(function () {
+        console.log(0);
         fetch("getpaper.php", {
-            method: "POST",
-            body: data
-        })
-        .then(res => res.json())
-        .then(json => {
-            for (j in json)
-            {
-                document.getElementById(".colorPaper").innerText="Giấy in màu: "+ json[j]['colorPaper'];
-                document.getElementById(".normalPaper").innerText="Giấy in thường: "+ json[j]['normalPaper'];;
-            }
-        })     
-        .catch(err => console.error(err));
-    }   
+        method: "POST",
+        body: data
+    })
+    .then(res => res.json())
+    .then(json => {
+        for (j in json)
+        {
+            document.getElementById(".colorPaper").innerText="Giấy in màu: "+ json[j]['colorPaper'];
+            document.getElementById(".normalPaper").innerText="Giấy in thường: "+ json[j]['normalPaper'];;
+        }
+    })     
+    .catch(err => console.error(err)); 
+}, 100)
     </script>
 </body>
 </html>
